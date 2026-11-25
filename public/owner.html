@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>לוח הבעלים – אתר בקליק</title><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2044%2044%22%3E%3Crect%20width%3D%2244%22%20height%3D%2244%22%20rx%3D%2212%22%20fill%3D%22%231f3a48%22/%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2222%22%20r%3D%2214.5%22%20fill%3D%22none%22%20stroke%3D%22%23d4f39b%22%20stroke-width%3D%222.6%22%20stroke-dasharray%3D%225%204%22/%3E%3Cpath%20d%3D%22M18%2014%20L30%2023.5%20L24%2024.3%20L27.6%2031.4%20L25%2032.6%20L21.4%2025.4%20L18%2028.8%20Z%22%20fill%3D%22%23fff%22/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1c2230;--muted:#667085;--line:#e4e7ec;--bg:#f3f4f7;--brand:#3b5bdb;--ok:#15803d;--warn:#b45309;--bad:#b91c1c}
+*{box-sizing:border-box}body{margin:0;font-family:'Heebo',Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px}
+button,input,select{font-family:inherit;font-size:inherit}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:12px 18px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+.top b{font-size:18px}.top .sp{flex:1}
+.wrap{max-width:1150px;margin:0 auto;padding:20px 16px 60px}
+.btn{border:1px solid #d0d5dd;background:#fff;border-radius:10px;padding:7px 12px;font-weight:600;cursor:pointer;white-space:nowrap;text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:5px}
+.btn:hover{background:#f7f8fa}.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}.btn.wa{background:#25d366;border-color:#25d366;color:#fff}.btn.sm{padding:4px 9px;font-size:13px;border-radius:8px}.btn.bad{color:var(--bad)}
+.inp{border:1px solid #d0d5dd;border-radius:10px;padding:9px 11px;width:100%;background:#fff;outline:none}.inp:focus{border-color:var(--brand)}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}
+.card h2{margin:0 0 6px;font-size:18px}.card .sub{color:var(--muted);margin:0 0 14px;font-size:14px;line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.stat small{color:var(--muted);display:block}.stat b{font-size:26px}
+.pk{display:grid;grid-template-columns:1.4fr .6fr .8fr 1.6fr auto;gap:8px;align-items:center;margin-bottom:8px}
+.pkh{font-size:12.5px;color:var(--muted);font-weight:700}
+@media(max-width:760px){.pk{grid-template-columns:1fr 1fr}.pkh{display:none}}
+.newcode{display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:8px;align-items:end}
+@media(max-width:760px){.newcode{grid-template-columns:1fr}}
+.fld label{display:block;font-weight:600;font-size:13.5px;margin-bottom:4px}
+.made{margin-top:14px;background:#ecfdf3;border:1px solid #a7f3d0;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.made code{font-size:20px;font-weight:800;letter-spacing:2px;direction:ltr;display:inline-block}
+.made .lnk{direction:ltr;text-align:left;word-break:break-all;background:#fff;border-radius:8px;padding:6px 10px;border:1px solid #d1fae5;font-size:14px}
+table{width:100%;border-collapse:collapse}th,td{padding:10px 8px;border-bottom:1px solid #eef0f4;text-align:right;vertical-align:middle}
+th{font-size:13px;color:var(--muted);font-weight:600}
+.chip{display:inline-block;border-radius:20px;padding:1px 10px;font-size:12.5px;font-weight:700}
+.c-ok{background:#dcfce7;color:var(--ok)}.c-warn{background:#fef3c7;color:var(--warn)}.c-bad{background:#fee2e2;color:var(--bad)}.c-blue{background:#e0e7ff;color:#3730a3}
+.acts{display:flex;gap:4px;flex-wrap:wrap}
+.login{max-width:360px;margin:12vh auto;background:#fff;border-radius:18px;padding:28px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.08)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1c2230;color:#fff;padding:10px 18px;border-radius:12px;font-weight:600;z-index:50}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.code{font-family:monospace;font-weight:700;letter-spacing:1px;direction:ltr;display:inline-block}
+@media(max-width:820px){thead{display:none}tr{display:block;border:1px solid var(--line);border-radius:12px;margin-bottom:10px;padding:6px}td{display:flex;justify-content:space-between;gap:10px;border:0;padding:6px 8px}td::before{content:attr(data-l);color:var(--muted);font-size:13px}}
+.igs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}.ig{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fafbfc}.ig.on{background:#ecfdf3;border-color:#a7f3d0}.ig small{display:block;color:var(--muted);font-size:12.5px}
+.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}@media(max-width:700px){.prices{grid-template-columns:1fr}}
+.bkf{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:10px 0}@media(max-width:800px){.bkf{grid-template-columns:1fr 1fr}}.tm{display:flex;gap:8px;align-items:center;font-weight:700}.pv{position:fixed;inset:0;background:#000b;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px}.pv img{max-width:92vw;max-height:80vh;border-radius:12px;background:#fff}.pv iframe{width:min(800px,92vw);height:80vh;border:0;border-radius:12px;background:#fff}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+var TOK=null;try{TOK=localStorage.getItem('owner-tok')}catch(e){}
+var $=function(s){return document.querySelector(s)},app=$('#app'),BP=[],TRANS=[],PRIV=[],SITES=[],CODES=[],SET={packages:[]},Q='',LAST=null;
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function toast(t){var x=document.createElement('div');x.className='toast';x.textContent=t;document.body.appendChild(x);setTimeout(function(){x.remove()},2600)}
+function api(p,b){return fetch(p,{method:b?'POST':'GET',headers:Object.assign({'Content-Type':'application/json'},TOK?{Authorization:'Bearer '+TOK}:{}),body:b?JSON.stringify(b):undefined}).then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok){var e=new Error(j.error||r.status);e.status=r.status;throw e}return j})})}
+function fmt(t){return t?new Date(t).toLocaleDateString('he-IL',{day:'numeric',month:'numeric',year:'numeric'}):'—'}
+function waN(n){var d=String(n||'').replace(/\D/g,'');if(d.charAt(0)==='0')d='972'+d.slice(1);return d}
+function base(){return location.origin.indexOf('http')===0&&location.origin!=='null'?location.origin:'https://moti-sites.onrender.com'}
+function linkFor(code){return base()+'/?code='+code}
+function waMsg(c){return'שלום'+(c.note?' '+c.note:'')+' 🙂\nתודה על הרכישה! זה הקישור האישי שלך לבניית '+(c.credits>1?c.credits+' אתרים':'האתר')+':\n'+linkFor(c.code)+'\n\nנכנסים, בוחרים את סוג העסק, בונים ולוחצים „🚀 פרסום” – והאתר באוויר.\nקוד הרכישה שלך: '+c.code}
+function login(){app.innerHTML='<form class="login" id="lf"><div style="font-size:44px">👑</div><h2 style="margin:6px 0">לוח הבעלים</h2><p style="color:#667085;margin:0 0 16px">רכישות, קודים וכל האתרים במקום אחד</p><input class="inp" type="password" id="pw" placeholder="סיסמת בעלים" style="text-align:center"><button class="btn pri" style="width:100%;justify-content:center;margin-top:12px;padding:10px">כניסה</button></form>';
+  $('#pw').focus();$('#lf').onsubmit=function(e){e.preventDefault();api('/api/owner/login',{pass:$('#pw').value}).then(function(j){TOK=j.token;try{localStorage.setItem('owner-tok',TOK)}catch(x){}load()}).catch(function(er){toast(er.status===429?'יותר מדי ניסיונות, נסו שוב מאוחר יותר':'סיסמה שגויה')})}}
+function load(){Promise.all([api('/api/owner/sites'),api('/api/owner/settings'),api('/api/owner/codes'),api('/api/owner/bankpays').catch(function(){return{list:[]}})]).then(function(r){BP=r[3].list||[];SITES=r[0].sites;PRIV=r[0].privates||[];TRANS=r[0].transfers||[];SET=r[1];CODES=r[2].codes;render()}).catch(function(e){if(e.status===401){TOK=null;try{localStorage.removeItem('owner-tok')}catch(x){}login()}else app.innerHTML='<div class="login"><p>אין חיבור לשרת</p><button class="btn pri" onclick="load()">נסו שוב</button></div>'})}
+function pkRow(p,i){return'<div class="pk" data-pk="'+i+'"><input class="inp" data-f="name" value="'+esc(p.name)+'" placeholder="שם החבילה"><input class="inp" data-f="sites" type="number" min="1" max="100" value="'+esc(p.sites)+'" title="כמה אתרים"><input class="inp" data-f="price" value="'+esc(p.price)+'" placeholder="מחיר"><input class="inp" data-f="link" dir="ltr" value="'+esc(p.link)+'" placeholder="https://… קישור לתשלום"><button class="btn sm bad" data-delpk="'+i+'" title="מחיקה">🗑</button></div>'}
+function render(){
+  var sold=CODES.reduce(function(s,c){return s+c.credits},0),used=CODES.reduce(function(s,c){return s+c.used},0),leads=SITES.reduce(function(s,x){return s+(x.leads||0)},0);
+  app.innerHTML='<div class="top"><b style="display:flex;align-items:center;gap:8px"><svg style="width:30px;height:30px" viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#1f3a48"/><circle cx="22" cy="22" r="14.5" fill="none" stroke="#d4f39b" stroke-width="2.6" stroke-dasharray="5 4"/><path d="M18 14 L30 23.5 L24 24.3 L27.6 31.4 L25 32.6 L21.4 25.4 L18 28.8 Z" fill="#fff"/></svg>אתר בקליק · לוח הבעלים</b><span class="sp"></span><a class="btn" href="/" target="_blank">🛠️ לאתר בקליק</a><button class="btn" id="out">יציאה</button></div><div class="wrap">'+
+  '<div class="stats"><div class="stat"><small>אתרים באוויר</small><b>'+SITES.length+'</b></div><div class="stat"><small>רכישות (קודים)</small><b style="color:#3b5bdb">'+CODES.length+'</b></div><div class="stat"><small>אתרים שנמכרו</small><b style="color:#15803d">'+sold+'</b></div><div class="stat"><small>אתרים שעוד לא נבנו</small><b style="color:#b45309">'+(sold-used)+'</b></div><div class="stat"><small>פניות מלקוחות באתרים</small><b>'+leads+'</b></div></div>'+
+  '<div class="card"><h2 id="pricesCard">💎 החבילות והמחירים שלך</h2><p class="sub">אלה החבילות שהלקוחות רואים בבונה. בכל חבילה: כמה אתרים, מחיר וקישור לתשלום (מדף הסליקה שלך – חשבונית ירוקה, Grow, PayPal וכו׳). אם אין קישור – כפתור הרכישה ישלח אליך הודעת וואטסאפ.</p>'+
+   '<div class="pk pkh"><span>שם החבילה</span><span>אתרים</span><span>מחיר</span><span>קישור לתשלום</span><span></span></div><div id="pks">'+SET.packages.map(pkRow).join('')+'</div>'+
+   '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px"><button class="btn" id="addpk">＋ חבילה</button></div>'+
+   '<div class="fld" style="margin-top:14px;max-width:320px"><label>הוואטסאפ שלך (לרכישה ולשאלות)</label><input class="inp" id="s-contact" dir="ltr" value="'+esc(SET.contact||'')+'" placeholder="05X-XXXXXXX"></div>'+
+   '<div class="fld" style="margin-top:12px"><label>🏠 איפה יישבו האתרים של הלקוחות?</label><select class="inp" id="s-mode"><option value="own"'+(SET.mode!=='hosted'?' selected':'')+'>כל לקוח בשרת משלו – משלם ישירות ל-Render (מומלץ: אין לך שום התחייבות)</option><option value="hosted"'+(SET.mode==='hosted'?' selected':'')+'>על השרת שלי – אני גובה דמי אחסון חודשיים</option></select></div>'+'<div class="fld" style="margin-top:12px"><label>📜 השם שלך / של העסק – יופיע כמפעיל השירות בתנאי השימוש</label><input class="inp" id="s-biz" value="'+esc(SET.biz||'')+'" placeholder="לדוגמה: מוטי וועג – אתר בקליק"></div>'+'<div class="prices"><div class="fld"><label>דמי אחסון לחודש</label><input class="inp" id="s-host" value="'+esc(SET.hosting||'')+'" placeholder="לדוגמה: 29 ₪"></div><div class="fld"><label>🌐 דומיין משלו – לחודש</label><input class="inp" id="s-dom" value="'+esc(SET.domainPrice||'')+'" placeholder="לדוגמה: 15 ₪"></div><div class="fld"><label>🏠 שרת פרטי – לחודש</label><input class="inp" id="s-priv" value="'+esc(SET.privatePrice||'')+'" placeholder="לדוגמה: 49 ₪"></div></div>'+
+   '<button class="btn pri" id="saveSet" style="margin-top:12px">💾 שמירת המחירים</button></div>'+
+  integ()+bankCard()+'<div class="card"><h2>🎟️ מכירה חדשה – יצירת קישור ללקוח</h2><p class="sub">הלקוח שילם? בוחרים חבילה, לוחצים „יצירת קישור” – ושולחים לו בוואטסאפ. בקישור יש קוד שמאפשר לו לבנות ולפרסם בדיוק את מספר האתרים שקנה.</p>'+
+   '<div class="newcode"><div class="fld"><label>חבילה</label><select class="inp" id="nc-pkg">'+SET.packages.map(function(p,i){return'<option value="'+i+'">'+esc(p.name)+' – '+p.sites+' '+(p.sites>1?'אתרים':'אתר')+(p.price?' ('+esc(p.price)+')':'')+'</option>'}).join('')+'<option value="custom">מספר אתרים אחר…</option></select></div>'+
+   '<div class="fld"><label>שם הלקוח</label><input class="inp" id="nc-note" placeholder="לדוגמה: יוסי כהן"></div><div class="fld"><label>טלפון / וואטסאפ</label><input class="inp" id="nc-phone" dir="ltr" placeholder="05X-XXXXXXX"></div>'+
+   '<button class="btn pri" id="nc-go" style="height:40px">🎟️ יצירת קישור</button></div><div id="made"></div></div>'+
+  '<div class="card"><h2>🎟️ קודים שנמכרו</h2><div id="codes"></div></div>'+
+  (TRANS.length?'<div class="card"><h2>🏠 לקוחות שעברו לשרת משלהם</h2><table><thead><tr><th>עסק</th><th>מייל</th><th>נקנה</th><th>מצב</th></tr></thead><tbody>'+TRANS.map(function(x){return'<tr><td data-l="עסק"><b>'+esc(x.name||'—')+'</b>'+(x.url?'<br><a href="'+esc(x.url)+'" target="_blank" dir="ltr"><small>'+esc(x.url)+'</small></a>':'')+'</td><td data-l="מייל">'+esc(x.email||'—')+'</td><td data-l="נקנה">'+new Date(x.created).toLocaleDateString('he-IL')+'</td><td data-l="מצב"><span class="chip '+(x.status==='imported'?'c-ok':'c-blue')+'">'+(x.status==='imported'?'✓ האתר בשרת שלו':'ממתין להקמה')+'</span></td></tr>'}).join('')+'</tbody></table></div>':'')+
+  (PRIV.length?'<div class="card"><h2>🏠 שרתים פרטיים</h2><table><thead><tr><th>עסק</th><th>כתובת</th><th>מייל</th><th>מצב</th></tr></thead><tbody>'+PRIV.map(function(x){return'<tr><td data-l="עסק"><b>'+esc(x.name)+'</b></td><td data-l="כתובת">'+(x.url?'<a href="'+esc(x.url)+'" target="_blank" dir="ltr">'+esc(x.url)+'</a>':'—')+'</td><td data-l="מייל">'+esc(x.email||'—')+'</td><td data-l="מצב"><span class="chip '+(x.status==='ready'?'c-ok':x.status==='building'?'c-blue':'c-bad')+'">'+({ready:'פועל',building:'בבנייה',stopped:'הופסק',error:'שגיאה'}[x.status]||x.status)+'</span></td></tr>'}).join('')+'</tbody></table></div>':'')+
+  '<div class="card"><h2>🌐 האתרים באוויר</h2><div class="filters"><input class="inp" id="q" placeholder="🔍 חיפוש לפי שם, כתובת, טלפון או קוד" style="max-width:320px" value="'+esc(Q)+'"></div><div id="list"></div></div></div>';
+  $('#out').onclick=function(){try{localStorage.removeItem('owner-tok')}catch(e){}TOK=null;login()};
+  $('#addpk').onclick=function(){readPk();SET.packages.push({name:'',sites:1,price:'',link:''});$('#pks').innerHTML=SET.packages.map(pkRow).join('');bindPk()};
+  bindPk();
+  bindBank();
+  $('#saveSet').onclick=function(){readPk();api('/api/owner/settings',{packages:SET.packages,contact:$('#s-contact').value,hosting:$('#s-host').value,biz:$('#s-biz').value,mode:$('#s-mode').value,domainPrice:$('#s-dom').value,privatePrice:$('#s-priv').value}).then(function(j){SET=j;toast('החבילות נשמרו ✓');render()}).catch(function(e){toast(e.message)})};
+  $('#nc-go').onclick=function(){var v=$('#nc-pkg').value,p=SET.packages[+v],credits=v==='custom'?parseInt(window.prompt('כמה אתרים?','1'),10):(p?p.sites:1);if(!credits)return;
+    api('/api/owner/codes',{credits:credits,note:$('#nc-note').value,phone:$('#nc-phone').value,pkg:p?p.name:'מותאם'}).then(function(j){var c={code:j.code,credits:j.credits,note:$('#nc-note').value,phone:$('#nc-phone').value};LAST=c;return load()}).catch(function(e){toast('לא נוצר: '+e.message)})};
+  if(LAST)showMade(LAST);
+  $('#q').oninput=function(){Q=this.value;list()};
+  codes();list();
+}
+function bankCard(){var B=SET.bank||{},wait=BP.filter(function(x){return x.status==='waiting'||x.status==='trusted'}).length;
+  var st={waiting:['c-blue','⏳ ממתין לאישור שלך'],trusted:['c-warn','🔍 לבדוק בבנק (הלקוח כבר קיבל)'],confirmed:['c-ok','✓ התקבל'],rejected:['c-bad','✗ לא התקבל']};
+  return'<div class="card" id="bankCard"><h2>🏦 העברה בנקאית'+(wait?' <span class="chip c-warn">'+wait+' לבדיקה</span>':'')+'</h2><p class="sub">הלקוח מעביר לחשבון שלך, מעלה אסמכתא ומקליד מספר אסמכתא וסכום. האתר בודק שהסכום מתאים לחבילה ושמספר האסמכתא לא שומש כבר – אבל <b>רק אתה רואה את הבנק</b>, ולכן הבדיקה האמיתית היא שלך.</p>'+
+  '<label class="tm"><input type="checkbox" id="bk-on"'+(SET.bankOn?' checked':'')+'> לאפשר תשלום בהעברה בנקאית</label>'+
+  '<div class="fld" style="margin-top:10px"><label>מה קורה אחרי שהלקוח מעלה אסמכתא?</label><select class="inp" id="bk-mode"><option value="trust"'+(SET.bankMode!=='approve'?' selected':'')+'>הלקוח ממשיך מיד, ואני בודק אחר כך (אם לא שולם – 3 ימים להסדיר, ואז האתר מושהה)</option><option value="approve"'+(SET.bankMode==='approve'?' selected':'')+'>הלקוח מחכה עד שאני מאשר</option></select></div>'+
+  '<div class="bkf"><div class="fld"><label>בנק</label><input class="inp" id="bk-name" value="'+esc(B.name||'')+'" placeholder="לדוגמה: לאומי"></div><div class="fld"><label>סניף</label><input class="inp" id="bk-branch" value="'+esc(B.branch||'')+'"></div><div class="fld"><label>מספר חשבון</label><input class="inp" id="bk-acc" value="'+esc(B.account||'')+'"></div><div class="fld"><label>על שם</label><input class="inp" id="bk-holder" value="'+esc(B.holder||'')+'"></div><div class="fld"><label>ביט / פייבוקס (לא חובה)</label><input class="inp" id="bk-bit" value="'+esc(B.bit||'')+'" placeholder="05X-XXXXXXX"></div></div>'+
+  '<button class="btn pri" id="bk-save">שמירה</button>'+
+  (BP.length?'<table style="margin-top:14px"><thead><tr><th>לקוח</th><th>חבילה</th><th>סכום</th><th>אסמכתא</th><th>מצב</th><th>פעולות</th></tr></thead><tbody>'+BP.map(function(x){var s=st[x.status]||['',x.status];
+   return'<tr><td data-l="לקוח"><b>'+esc(x.name||'—')+'</b><br><small>'+esc(x.email)+' · '+fmt(x.created)+'</small></td><td data-l="חבילה">'+esc(x.pkg)+'</td><td data-l="סכום">'+esc(x.amount)+' ₪'+(x.amount<x.price?' <span class="chip c-bad">חסר</span>':'')+'</td><td data-l="אסמכתא" dir="ltr">'+esc(x.ref)+'<br><button class="btn sm" data-proof="'+x.id+'">🧾 צפייה</button></td><td data-l="מצב"><span class="chip '+s[0]+'">'+s[1]+'</span>'+(x.status==='rejected'&&x.revoke_at?'<br><small>'+(x.revoke_at>Date.now()?'יושהה ב-'+fmt(x.revoke_at):'האתר מושהה')+'</small>':'')+'</td><td data-l="פעולות"><div class="acts">'+(x.status!=='confirmed'?'<button class="btn sm" data-bk="confirm" data-id="'+x.id+'">✓ התקבל</button>':'')+(x.status==='waiting'||x.status==='trusted'?'<button class="btn sm bad" data-bk="reject" data-id="'+x.id+'">✗ לא התקבל</button>':'')+(x.status==='rejected'&&x.revoke_at>Date.now()?'<button class="btn sm bad" data-bk="revoke" data-id="'+x.id+'">⏸️ להשהות עכשיו</button>':'')+'</div></td></tr>'}).join('')+'</tbody></table>':'<p class="sub" style="margin-top:12px">עדיין אין תשלומים בהעברה בנקאית.</p>')+'</div>'}
+function bindBank(){if(!$('#bk-save'))return;
+  $('#bk-save').onclick=function(){api('/api/owner/settings',{bankOn:$('#bk-on').checked,bankMode:$('#bk-mode').value,bank:{name:$('#bk-name').value,branch:$('#bk-branch').value,account:$('#bk-acc').value,holder:$('#bk-holder').value,bit:$('#bk-bit').value}}).then(function(j){SET=j;toast('נשמר ✓');render()}).catch(function(e){toast(e.message)})};
+  document.querySelectorAll('[data-bk]').forEach(function(b){b.onclick=function(){var a=b.dataset.bk,m={confirm:'לאשר שהכסף התקבל?',reject:'לסמן שההעברה לא נמצאה? הלקוח יקבל מייל'+(BP.filter(function(x){return x.id===b.dataset.id})[0].status==='trusted'?' – ואם לא יסדיר תוך 3 ימים, האתר שלו יושהה.':'.'),revoke:'להשהות את האתר של הלקוח עכשיו?'}[a];if(window.confirm(m))act('/api/owner/bank',{id:b.dataset.id,action:a},'עודכן ✓')}});
+  document.querySelectorAll('[data-proof]').forEach(function(b){b.onclick=function(){api('/api/owner/bankproof/'+b.dataset.proof).then(function(j){var w=document.createElement('div');w.className='pv';w.innerHTML=(j.proof.indexOf('data:application/pdf')===0?'<iframe src="'+j.proof+'"></iframe>':'<img src="'+j.proof+'">')+'<button class="btn">סגירה</button>';w.onclick=function(e){if(e.target===w||e.target.tagName==='BUTTON')w.remove()};document.body.appendChild(w)})}})}
+function integ(){var I=SET.integrations||{};function b(on,t,how){return'<div class="ig '+(on?'on':'')+'"><b>'+(on?'✅':'⚪')+' '+t+'</b><small>'+(on?'פועל אוטומטית':how)+'</small></div>'}
+  return'<div class="card"><h2>⚙️ אוטומציה</h2><div class="igs">'+b(I.paypal,'תשלום ב-PayPal','PAYPAL_CLIENT_ID + PAYPAL_SECRET')+b(I.mail,'מייל אוטומטי ללקוח','BREVO_API_KEY + MAIL_FROM')+b(I.render,'חיבור דומיינים','RENDER_API_KEY')+b(I.private,'שרתים פרטיים','RENDER_API_KEY')+'</div></div>'}
+function showMade(c){var w=waN(c.phone);$('#made').innerHTML='<div class="made"><b>✅ נוצר קוד ל'+(esc(c.note)||'לקוח')+' – '+c.credits+' '+(c.credits>1?'אתרים':'אתר')+'</b><div>קוד: <code>'+c.code+'</code></div><div class="lnk">'+esc(linkFor(c.code))+'</div><div style="display:flex;gap:8px;flex-wrap:wrap">'+(w?'<a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/'+w+'?text='+encodeURIComponent(waMsg(c))+'">💬 שליחה ללקוח בוואטסאפ</a>':'<a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent(waMsg(c))+'">💬 שליחה בוואטסאפ</a>')+'<button class="btn" id="cpy">📋 העתקת ההודעה</button></div></div>';
+  $('#cpy').onclick=function(){navigator.clipboard.writeText(waMsg(c)).then(function(){toast('ההודעה הועתקה')},function(){toast('לא הצלחתי להעתיק')})}}
+function readPk(){document.querySelectorAll('#pks [data-pk]').forEach(function(r){var i=+r.dataset.pk,p=SET.packages[i];r.querySelectorAll('[data-f]').forEach(function(x){p[x.dataset.f]=x.dataset.f==='sites'?parseInt(x.value,10)||1:x.value})})}
+function bindPk(){document.querySelectorAll('[data-delpk]').forEach(function(b){b.onclick=function(){readPk();SET.packages.splice(+b.dataset.delpk,1);$('#pks').innerHTML=SET.packages.map(pkRow).join('');bindPk()}})}
+function codes(){
+  if(!CODES.length){$('#codes').innerHTML='<p style="color:#667085">עדיין לא נוצרו קודים. כשלקוח משלם – יוצרים לו קישור בחלק „מכירה חדשה” למעלה.</p>';return}
+  $('#codes').innerHTML='<table><thead><tr><th>קוד</th><th>לקוח</th><th>חבילה</th><th>נוצר</th><th>אתרים</th><th>פעולות</th></tr></thead><tbody>'+CODES.map(function(c){var left=c.credits-c.used,w=waN(c.phone);
+    return'<tr><td data-l="קוד"><span class="code">'+c.code+'</span></td><td data-l="לקוח">'+esc(c.note||'—')+(c.phone?'<br><small dir="ltr" style="color:#667085">'+esc(c.phone)+'</small>':'')+'</td><td data-l="חבילה">'+esc(c.pkg||'—')+'</td><td data-l="נוצר">'+fmt(c.created)+'</td><td data-l="אתרים"><span class="chip '+(left?'c-blue':'c-ok')+'">'+c.used+' מתוך '+c.credits+' נבנו</span></td>'+
+    '<td data-l="פעולות"><div class="acts"><a class="btn sm" target="_blank" rel="noopener" href="https://wa.me/'+(w||'')+'?text='+encodeURIComponent(waMsg(c))+'">💬 שליחה שוב</a><button class="btn sm" data-addc="'+c.code+'">＋ אתר</button><button class="btn sm bad" data-delc="'+c.code+'">🗑</button></div></td></tr>'}).join('')+'</tbody></table>';
+  document.querySelectorAll('[data-addc]').forEach(function(b){b.onclick=function(){act('/api/owner/code',{code:b.dataset.addc,action:'add',n:1},'נוסף אתר לקוד ✓')}});
+  document.querySelectorAll('[data-delc]').forEach(function(b){b.onclick=function(){if(window.confirm('למחוק את הקוד? אתרים שכבר נבנו איתו נשארים באוויר.'))act('/api/owner/code',{code:b.dataset.delc,action:'delete'},'הקוד נמחק')}});
+}
+function list(){
+  var q=Q.trim().toLowerCase(),rows=SITES.filter(function(s){return!q||[s.slug,s.name,s.phone,s.code].join(' ').toLowerCase().indexOf(q)>=0});
+  if(!rows.length){$('#list').innerHTML='<p style="color:#667085;text-align:center;padding:20px">אין אתרים להצגה.</p>';return}
+  $('#list').innerHTML='<table><thead><tr><th>עסק</th><th>טלפון</th><th>נפתח</th><th>קוד רכישה</th><th>מצב</th><th>פניות</th><th>פעולות</th></tr></thead><tbody>'+rows.map(function(s){
+    return'<tr><td data-l="עסק"><b>'+esc(s.name||'—')+'</b><br><a href="/'+esc(s.slug)+'" target="_blank" dir="ltr" style="font-size:13px">/'+esc(s.slug)+'</a></td><td data-l="טלפון" dir="ltr">'+esc(s.phone||'—')+(s.email?'<br><small style="color:#667085">'+esc(s.email)+'</small>':'')+(s.domain?'<br><small>🌐 '+esc(s.domain)+'</small>':'')+'</td><td data-l="נפתח">'+fmt(s.created)+'</td><td data-l="קוד רכישה"><span class="code">'+esc(s.code||'—')+'</span></td><td data-l="מצב">'+(s.suspended?'<span class="chip c-bad">מושהה</span>':s.billing?'<span class="chip c-warn">התשלום הופסק</span>':'<span class="chip c-ok">באוויר</span>')+(s.pp_sub?' <span class="chip c-blue">PayPal</span>':'')+'</td><td data-l="פניות">'+(s.leads||0)+'</td>'+
+    '<td data-l="פעולות"><div class="acts"><button class="btn sm" data-sus="'+esc(s.slug)+'">'+(s.suspended?'▶️ הפעלה':'⏸️ השהיה')+'</button><button class="btn sm bad" data-del="'+esc(s.slug)+'">🗑</button></div></td></tr>'}).join('')+'</tbody></table>';
+  document.querySelectorAll('[data-sus]').forEach(function(b){var s=SITES.find(function(x){return x.slug===b.dataset.sus});b.onclick=function(){act('/api/owner/site',{slug:s.slug,action:'suspend',value:!s.suspended},s.suspended?'האתר הופעל ✓':'האתר הושהה')}});
+  document.querySelectorAll('[data-del]').forEach(function(b){b.onclick=function(){var c=window.prompt('מחיקה סופית של האתר וכל הנתונים שלו. להקליד את כתובת האתר לאישור: '+b.dataset.del);if(c===b.dataset.del)act('/api/owner/site',{slug:c,action:'delete',confirm:c},'האתר נמחק')}});
+}
+function act(path,body,msg){api(path,body).then(function(){toast(msg);load()}).catch(function(e){toast('הפעולה נכשלה: '+e.message)})}
+if(TOK)load();else login();
+</script>
+</body>
+</html>

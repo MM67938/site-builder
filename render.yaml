@@ -1,0 +1,23 @@
+# Blueprint for a customer's PRIVATE server (one business, paid by the customer on their own Render account).
+# Used by the "Deploy to Render" button in README.md.
+services:
+  - type: web
+    name: my-business-site
+    runtime: node
+    plan: starter            # paid instance: always on, never sleeps
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+    disk:                    # the site and all admin data are stored here
+      name: data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: SINGLE_SITE
+        value: "1"
+      - key: DATA_DIR
+        value: /var/data
+      - key: KEEP_AWAKE
+        value: "off"
+      - key: IMPORT_URL       # paste the transfer link you got after buying (bring your site over)
+        sync: false

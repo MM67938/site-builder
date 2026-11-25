@@ -1,0 +1,10 @@
+{
+  "name": "site-builder-server",
+  "version": "1.0.0",
+  "description": "בונה אתרים לעסקים – שרת לפרסום אתרים וסנכרון מסך הניהול",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": "22.x" },
+  "license": "UNLICENSED",
+  "private": true
+}

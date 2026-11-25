@@ -1,0 +1,19 @@
+# FREE blueprint – used from the "free" branch of the repo (render.com/deploy?repo=<repo>/tree/free).
+# Free Render instances have no disk, so the site and its data are kept in a free Turso database.
+services:
+  - type: web
+    name: my-business-site
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+    envVars:
+      - key: SINGLE_SITE
+        value: "1"
+      - key: IMPORT_URL          # the transfer link you got after buying
+        sync: false
+      - key: TURSO_DATABASE_URL  # from turso.tech → your database → URL
+        sync: false
+      - key: TURSO_AUTH_TOKEN    # from turso.tech → your database → Create Token
+        sync: false
